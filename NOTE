@@ -1,0 +1,8 @@
+Migrate
+**************
+php artisan migrate
+php artisan migrate:reset
+
+Create controller
+**************
+php artisan make:controller RegisterController
