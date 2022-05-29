@@ -54,6 +54,8 @@ class DestinationController extends Controller
         }
 
         return Destination::orderBy($filterKey, $filterValue)
+            ->where('title', 'LIKE', '%' . $request->searchKey . '%')
+            ->orWhere('description', 'LIKE', '%' . $request->searchKey . '%')
             ->paginate($request->per_page);
     }
 }

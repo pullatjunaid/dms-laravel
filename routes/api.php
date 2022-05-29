@@ -32,3 +32,8 @@ Route::post('/destination', 'App\Http\Controllers\DestinationController@saveDest
 Route::put('/destination/{id}', 'App\Http\Controllers\DestinationController@update');
 
 Route::get('/dashboard', 'App\Http\Controllers\DashboardController@getDashboardData');
+
+Route::get('/app-users', 'App\Http\Controllers\AppUsersController@getAppUsers');
+Route::post('/app-users', 'App\Http\Controllers\AppUsersController@saveAppUser');
+
+Route::get('/backup-db', 'App\Http\Controllers\AppUsersController@backDb');
