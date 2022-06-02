@@ -21,6 +21,7 @@ class Entries extends Migration
             $table->text('subject')->nullable();
             $table->dateTime('from_date')->nullable();
             $table->dateTime('to_date')->nullable();
+            $table->string('userid');
             $table->timestamps();
         });
     }

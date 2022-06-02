@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Destination;
 use App\Models\Entry;
+use App\User;
+use Illuminate\Support\Facades\Auth;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -23,10 +26,12 @@ class EntriesController extends Controller
             'ref_id' => "PU/SET/DCS/22-23/",
             'from_date' => $request->from_date,
             'to_date' => $request->to_date,
+            'userid' => 1,
         ]);
         $updatedEntry = Entry::find($entry->id);
         $updatedEntry->ref_id = "PU/SET/DCS/22-23/" . $entry->id;
         $updatedEntry->save();
+        $updatedEntry['usrjfdf'] = Auth::user();
         return  $updatedEntry;
     }
 
@@ -49,6 +54,15 @@ class EntriesController extends Controller
         return  $response;
     }
 
+    public function deleteEntry($id)
+    {
+        $entry = Entry::find($id);
+        $entry->delete();
+        $response['message'] = "Entry deleted successfully";
+        $response['entry'] = $entry;
+        return  $response;
+    }
+
     public function getEntries(Request $request)
     {
         $isfilter = false;
@@ -64,12 +78,24 @@ class EntriesController extends Controller
             $filterValue =   'desc';
         }
 
+        $filterDateFrom = new DateTime('1950-01-01');
+        $filterDateTo = new DateTime();
+        if ($request->dateFilterFrom != '') {
+            $filterDateFrom = new DateTime($request->dateFilterFrom);
+        }
+        if ($request->dateFilterTo != '') {
+            $filterDateTo = new DateTime($request->dateFilterTo);
+        }
+
         $result = Entry::with('fromWhom')
             ->with('toWhom')
             ->where('ref_id', 'LIKE', '%' . $request->searchKey . '%')
+            ->where('created_at', '>=', $filterDateFrom->format('Y-m-d'))
+            ->where('created_at', '<', $filterDateTo->modify('+1 day')->format('Y-m-d'))
             ->orderBy($filterKey, $filterValue)
             ->paginate($request->per_page);
         // $result[22] = $request;
+        // $result['useeee'] =  $filterDateTo->format('Y-m-d');
         return $result;
 
         // return Entry::with('fromWhom')

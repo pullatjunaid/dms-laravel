@@ -22,6 +22,7 @@ class AuthenticationController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'user_type' => "administrator",
         ]);
         $response['user'] = $user;
         $response['message'] = "User created successfully";
@@ -39,11 +40,21 @@ class AuthenticationController extends Controller
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
-                'message' => ['The provided credentials are incorrect.'],
+                'message' => ['Provided credentials are incorrect.'],
             ]);
         }
         $success['api_token'] = $user->createToken('dms')->plainTextToken;
         $success['user'] = $user;
+
+        if ($user->user_type == "administrator") {
+            $success['permissions'] = array(
+                (object) ['name' => 'backup.view'],
+                (object) ['name' => 'entry.create'],
+                (object) ['name' => 'entry.delete'],
+                (object) ['name' => 'entry.edit'],
+                (object) ['name' => 'entry.view'],
+            );
+        }
         return $success;
     }
 

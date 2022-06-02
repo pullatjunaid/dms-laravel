@@ -22,6 +22,7 @@ Route::post('/register-user', 'App\Http\Controllers\AuthenticationController@reg
 Route::post('/login', 'App\Http\Controllers\AuthenticationController@login');
 Route::get('/logout', 'App\Http\Controllers\AuthenticationController@logout');
 
+Route::delete('/entries/{id}', 'App\Http\Controllers\EntriesController@deleteEntry');
 Route::get('/entries', 'App\Http\Controllers\EntriesController@getEntries');
 Route::get('/last-entry', 'App\Http\Controllers\EntriesController@getLastEntry');
 Route::post('/entries', 'App\Http\Controllers\EntriesController@saveEntry');
@@ -35,5 +36,6 @@ Route::get('/dashboard', 'App\Http\Controllers\DashboardController@getDashboardD
 
 Route::get('/app-users', 'App\Http\Controllers\AppUsersController@getAppUsers');
 Route::post('/app-users', 'App\Http\Controllers\AppUsersController@saveAppUser');
+Route::put('/app-users-reset-password/{userid}', 'App\Http\Controllers\AppUsersController@resetPassword');
 
-Route::get('/backup-db', 'App\Http\Controllers\AppUsersController@backDb');
+Route::get('/backup-db', 'App\Http\Controllers\BackupDatabaseController@backupDb');

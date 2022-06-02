@@ -10,11 +10,13 @@ class DestinationController extends Controller
     public function saveDestination(Request $request)
     {
         $request->validate([
-            'title' => 'required|unique:destinations'
+            'title' => 'required|unique:destinations',
+            'shortname' => 'required '
         ]);
 
         $destination = Destination::create([
             'title' => $request->title,
+            'shortname' => $request->shortname,
             'description' => $request->description,
         ]);
         $response['message'] = "Destination created successfully";
