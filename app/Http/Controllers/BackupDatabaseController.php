@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Backup;
 use Illuminate\Http\Request;
 use mysqli;
 
@@ -79,9 +80,14 @@ class BackupDatabaseController extends Controller
         fwrite($fileHandler, $outsql);
         fclose($fileHandler);
 
+        $backup = Backup::create([
+            'userid' => 1,
+            'description' => "Database backup",
+        ]);
 
         $response['data']['backupdata'] =  $outsql;
         $response['data']['backupFileName'] = $backup_file_name;
+        $response['data']['details'] = $backup;
         $response['message'] =  "success";
         return $response;
 

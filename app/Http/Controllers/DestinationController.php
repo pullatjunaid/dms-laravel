@@ -33,6 +33,7 @@ class DestinationController extends Controller
         $destination = Destination::find($id);
         $destination->title =  $request->get('title');
         $destination->description = $request->get('description');
+        $destination->shortname = $request->get('shortname');
         $destination->save();
         $response['message'] = "Destination updated successfully";
         $response['destination'] = $destination;

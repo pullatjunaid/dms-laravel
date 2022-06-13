@@ -48,11 +48,31 @@ class AuthenticationController extends Controller
 
         if ($user->user_type == "administrator") {
             $success['permissions'] = array(
+                (object) ['name' => 'backup.create'],
+                (object) ['name' => 'backup.delete'],
+                (object) ['name' => 'backup.edit'],
                 (object) ['name' => 'backup.view'],
                 (object) ['name' => 'entry.create'],
                 (object) ['name' => 'entry.delete'],
                 (object) ['name' => 'entry.edit'],
                 (object) ['name' => 'entry.view'],
+                (object) ['name' => 'destination.create'],
+                (object) ['name' => 'destination.delete'],
+                (object) ['name' => 'destination.edit'],
+                (object) ['name' => 'destination.view'],
+                (object) ['name' => 'appUser.create'],
+                (object) ['name' => 'appUser.delete'],
+                (object) ['name' => 'appUser.edit'],
+                (object) ['name' => 'appUser.view'],
+                (object) ['name' => 'appUser.resetPassword'],
+
+            );
+        } else  if ($user->user_type == "viewer") {
+            $success['permissions'] = array(
+                (object) ['name' => 'backup.view'],
+                (object) ['name' => 'entry.view'],
+                (object) ['name' => 'destination.view'],
+                (object) ['name' => 'appUser.view'],
             );
         }
         return $success;

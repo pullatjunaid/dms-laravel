@@ -58,10 +58,13 @@ class AppUsersController extends Controller
         ]);
 
         $user = AppUser::find($id);
-        $user->password = $request->get('password');
+        $user->password = Hash::make($request->password);
         $user->save();
         $response['message'] = "User password has been reset successfully";
         $response['user'] = $user;
+        $response['pass']  = $request->get('password');
+        $response['hashpass']  = Hash::make($request->get('password'));
+
         return $response;
     }
 }
