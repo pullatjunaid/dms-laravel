@@ -67,6 +67,29 @@ class AuthenticationController extends Controller
                 (object) ['name' => 'appUser.resetPassword'],
 
             );
+        } else  if ($user->user_type == "modifier") {
+            $success['permissions'] = array(
+                (object) ['name' => 'backup.create'],
+                (object) ['name' => 'backup.edit'],
+                (object) ['name' => 'backup.view'],
+                (object) ['name' => 'entry.create'],
+                (object) ['name' => 'entry.edit'],
+                (object) ['name' => 'entry.view'],
+                (object) ['name' => 'destination.create'],
+                (object) ['name' => 'destination.edit'],
+                (object) ['name' => 'destination.view'],
+
+            );
+        } else  if ($user->user_type == "end_user") {
+            $success['permissions'] = array(
+                (object) ['name' => 'backup.create'],
+                (object) ['name' => 'backup.view'],
+                (object) ['name' => 'entry.create'],
+                (object) ['name' => 'entry.view'],
+                (object) ['name' => 'destination.create'],
+                (object) ['name' => 'destination.view'],
+
+            );
         } else  if ($user->user_type == "viewer") {
             $success['permissions'] = array(
                 (object) ['name' => 'backup.view'],
