@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/register-user', 'App\Http\Controllers\AuthenticationController@register');
 Route::post('/login', 'App\Http\Controllers\AuthenticationController@login');
 Route::get('/logout', 'App\Http\Controllers\AuthenticationController@logout');
+Route::get('/cau', 'App\Http\Controllers\AuthenticationController@cau');
 
 Route::delete('/entries/{id}', 'App\Http\Controllers\EntriesController@deleteEntry');
 Route::get('/entries', 'App\Http\Controllers\EntriesController@getEntries');
